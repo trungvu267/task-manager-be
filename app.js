@@ -1,7 +1,9 @@
 import express from 'express'
 import task from './routes/task.js'
 import connectDb from './db/connect.js'
+import notFound from './middlewares/not-found.js'
 import dotenv from 'dotenv'
+import errorHandlerMiddleware from './middlewares/error-handler.js'
 dotenv.config()
 const app = express()
 
@@ -13,6 +15,8 @@ app.get('/hello', (req, res) => {
 })
 
 app.use('/api/v1/task', task)
+app.use(notFound)
+app.use(errorHandlerMiddleware)
 
 const start = async () => {
   try {
